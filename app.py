@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import os
 import boto3
 from botocore.config import Config
@@ -29,6 +29,15 @@ async def index():
 
 @app.get("/ping")
 async def ping():
+    return {"message": "pong!!!!!"}
+
+@app.get("/print-request")
+@app.post("/print-request")
+async def ping(request: Request):
+    print(request.headers)
+    print()
+    print(await request.body())
+    print()
     return {"message": "pong!!!!!"}
 
 @app.get("/env")
